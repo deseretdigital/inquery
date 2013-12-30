@@ -25,14 +25,15 @@ abstract class Generated_Forms_I_Database extends DDM_BootstrapForm
         );
         $this->addElement($I_id);
         
-        $I_name = new Zend_Form_Element_Text( 'I_name',
+        $I_name = new Zend_Form_Element_Textarea( 'I_name',
             array(
                 'filters' => array('StringTrim'),
                 'label' => 'Name'
                 )
         );
-        $I_name->setAttrib('maxlength', '20');
+        $I_name->setAttrib('maxlength', '255');
         
+        $I_name->addValidator('stringLength', false, array(0, 255));
         $this->addElement($I_name);
         
         $I_db_name = new Zend_Form_Element_Text( 'I_db_name',

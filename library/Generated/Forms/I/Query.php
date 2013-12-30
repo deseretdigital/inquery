@@ -96,6 +96,38 @@ abstract class Generated_Forms_I_Query extends DDM_BootstrapForm
         $I_notes->addValidator('stringLength', false, array(0, 65000));
         $this->addElement($I_notes);
         
+        $I_results_hash = new Zend_Form_Element_Text( 'I_results_hash',
+            array(
+                'filters' => array('StringTrim'),
+                'label' => 'Results hash'
+                )
+        );
+        $I_results_hash->setAttrib('maxlength', '32');
+        
+        $I_results_hash->addValidator('stringLength', false, array(0, 32));
+        $this->addElement($I_results_hash);
+        
+        $I_column_hash = new Zend_Form_Element_Text( 'I_column_hash',
+            array(
+                'filters' => array('StringTrim'),
+                'label' => 'Column hash'
+                )
+        );
+        $I_column_hash->setAttrib('maxlength', '32');
+        
+        $I_column_hash->addValidator('stringLength', false, array(0, 32));
+        $this->addElement($I_column_hash);
+        
+        $I_time = new Zend_Form_Element_Text( 'I_time',
+            array(
+                'filters' => array('StringTrim'),
+                'label' => 'Time'
+                )
+        );
+        $I_time->setAttrib('maxlength', '15');
+        
+        $this->addElement($I_time);
+        
         $this->addElement( 
             'submit',
             'Submit');
