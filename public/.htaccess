@@ -1,0 +1,17 @@
+php_value session.cookie_lifetime 0
+
+RewriteEngine On
+RewriteBase /
+
+RewriteRule ^js/[0-9]+(.*) js/$1 [L]
+RewriteRule ^css/[0-9]{10,}(.*) css/$1 [L]
+RewriteRule ^[0-9]+/css/(.*) css/$1 [L]
+
+#RewriteRule ^files/renditions/(.*) index/file/rendition/$1 [L]
+RewriteRule ^files/(.*) index/file?path=$1 [L]
+
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -l [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^.*$ - [NC,L]
+RewriteRule ^.*$ index.php [NC,L]

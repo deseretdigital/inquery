@@ -1,0 +1,116 @@
+<?php // http://azmind.com/demo/andia-agency/  ?>
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <?php echo $this->headTitle(); ?>
+        <?php echo $this->headMeta(); ?>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <script src="/assets/js/jquery-1.8.2.min.js"></script>
+        <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+        <script src="/assets/js/bootstrap-affix.js"></script>
+        <script src="/assets/js/jquery.flexslider.js"></script>
+
+        <?php echo $this->headLink(); ?>
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,400">
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Droid+Sans">
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lobster">
+        <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/assets/prettyPhoto/css/prettyPhoto.css">
+        <link rel="stylesheet" href="/assets/css/flexslider.css">
+        <link rel="stylesheet" href="/assets/css/font-awesome.css">
+        <link rel="stylesheet" href="/assets/css/style.css">
+
+        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <!-- Favicon and touch icons -->
+        <!--
+        <link rel="shortcut icon" href="assets/ico/favicon.ico">
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
+        -->
+
+        <?php echo $this->headScript(); ?>
+        <?php echo $this->jQuery(); ?>
+
+    </head>
+
+    <body data-spy="scroll" data-target=".bs-docs-sidenav">
+
+        <!-- Header -->
+        <div class="container">
+            <div class="header row">
+                <div class="span12">
+                    <div class="navbar">
+                        <div class="navbar-inner">
+                            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </a>
+                            <h1>
+                                <a class="brand" href="/">DDM Polls</a>
+                            </h1>
+                            <div class="nav-collapse collapse">
+                                <ul class="nav pull-right">
+
+                                    <li <?php if($_SERVER['REQUEST_URI'] == '/') { echo 'class="current-page"';} ?>>
+                                        <a href="/"><i class="icon-home"></i><br />Projects</a>
+                                    </li>
+                                    <li <?php if($_SERVER['REQUEST_URI'] == '/index/admin') { echo 'class="current-page"';} ?>>
+                                        <a href="/index/admin"><i class="icon-tasks"></i><br />Admin</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+		<?php echo $this->layout()->content; ?>
+
+
+        <!-- Footer -->
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="widget span4">
+                        <h4>About Us</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et.</p>
+                        <p><a href="/index/contact">Read more...</a></p>
+                    </div>
+                    <div class="widget span4">
+                        <h4>Development Updates</h4>
+                        <p>This project will be great</p>
+                    </div>
+                    <div class="widget span4">
+                        <h4>Other</h4>
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et.</p>
+                    </div>
+                </div>
+                <div class="footer-border"></div>
+                <div class="row">
+                    <div class="social span12">
+                        <a class="facebook" href=""></a>
+                        <a class="dribbble" href=""></a>
+                        <a class="twitter" href=""></a>
+                        <a class="pinterest" href=""></a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <script src="/assets/js/scripts.js"></script>
+    </body>
+</html>
