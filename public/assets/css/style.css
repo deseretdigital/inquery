@@ -11,14 +11,13 @@
 
 body {
     background: #fff;
-    text-align: center;
     font-family: 'Open Sans', Helvetica, Arial, sans-serif;
     color: #888;
     font-size: 12px;
 }
 
 .row {
-	text-align:left;	
+	text-align:left;
 }
 
 .span10 {
@@ -69,10 +68,10 @@ strong { font-weight: bold; }
 .header a.brand {
     display: inline-block;
     text-indent: -9999px;
-    width: 280px;
+    width: 350px;
     height: 63px;
     padding: 30px 0;
-    background: url(../../ddm-logo.jpg) 20px center no-repeat;
+    background: url(../../deseret-digital-media.gif) 20px center no-repeat;
 }
 
 .header ul.nav {
@@ -307,7 +306,7 @@ strong { font-weight: bold; }
 .portfolio .work .icon-awesome a {
     display: inline-block;
     padding: 5px 9px;
-    background: #4F91CD; 
+    background: #4F91CD;
     color: #fff;
     -moz-border-radius: 19px;
     -webkit-border-radius: 19px;
@@ -466,7 +465,7 @@ footer .widget i {
     overflow-y: hidden;
     list-style: none;
 }
-	
+
 .tweet_list li {
     height: 100%;
     overflow-y: auto;
@@ -474,11 +473,11 @@ footer .widget i {
     list-style-type: none;
     line-height: 24px;
 }
-		
+
 .tweet_list .tweet_avatar {
     float: left;
 }
-		
+
 .tweet_list .tweet_avatar img {
     vertical-align: middle;
 }
@@ -1181,7 +1180,7 @@ ul.portfolio-img li {
 
 /* Line 911 */
 .bs-docs-sidenav > li > a
-{	
+{
 }
 
 /* Line 801 */

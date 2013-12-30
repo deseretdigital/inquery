@@ -1,5 +1,9 @@
-<?php // http://azmind.com/demo/andia-agency/  ?>
-<!DOCTYPE html>
+<?php
+$request = Zend_Controller_Front::getInstance()->getRequest();
+$controller = $request->getParam('controller');
+$action = $request->getParam('action');
+// http://azmind.com/demo/andia-agency/
+?><!DOCTYPE html>
 <html lang="en">
 
     <head>
@@ -25,6 +29,11 @@
         <link rel="stylesheet" href="/assets/css/flexslider.css">
         <link rel="stylesheet" href="/assets/css/font-awesome.css">
         <link rel="stylesheet" href="/assets/css/style.css">
+        <style>
+            .inquery-content {
+                margin: 0 100px 0 100px;
+            }
+        </style>
 
         <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
         <!--[if lt IE 9]>
@@ -44,9 +53,7 @@
         <?php echo $this->jQuery(); ?>
 
     </head>
-
     <body data-spy="scroll" data-target=".bs-docs-sidenav">
-
         <!-- Header -->
         <div class="container">
             <div class="header row">
@@ -64,7 +71,7 @@
                             <div class="nav-collapse collapse">
                                 <ul class="nav pull-right">
 
-                                    <li <?php if($_SERVER['REQUEST_URI'] == '/') { echo 'class="current-page"';} ?>>
+                                    <li <?php if($controller == 'index' && in_array($action, array('index', 'project'))) { echo 'class="current-page"';} ?>>
                                         <a href="/"><i class="icon-home"></i><br />Projects</a>
                                     </li>
                                     <li <?php if($_SERVER['REQUEST_URI'] == '/index/admin') { echo 'class="current-page"';} ?>>
@@ -77,38 +84,25 @@
                 </div>
             </div>
         </div>
-
-
-		<?php echo $this->layout()->content; ?>
-
-
+        <div class="container">
+            <?php echo $this->layout()->content; ?>
+        </div>
         <!-- Footer -->
         <footer>
-            <div class="container">
+            <div class="container-fluid">
                 <div class="row">
                     <div class="widget span4">
                         <h4>About Us</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et.</p>
-                        <p><a href="/index/contact">Read more...</a></p>
+                        <p>We like to write lots of versions of queries to see which one is our favorite!</p>
                     </div>
                     <div class="widget span4">
                         <h4>Development Updates</h4>
                         <p>This project will be great</p>
                     </div>
                     <div class="widget span4">
-                        <h4>Other</h4>
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et.</p>
                     </div>
                 </div>
                 <div class="footer-border"></div>
-                <div class="row">
-                    <div class="social span12">
-                        <a class="facebook" href=""></a>
-                        <a class="dribbble" href=""></a>
-                        <a class="twitter" href=""></a>
-                        <a class="pinterest" href=""></a>
-                    </div>
-                </div>
             </div>
         </footer>
         <script src="/assets/js/scripts.js"></script>

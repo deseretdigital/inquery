@@ -1,1 +1,61 @@
+<style>
+    .project-options {
+        width:180px;
+    }
+</style>
 <h2>Track, collaborate and benchmark different versions of an SQL query</h2>
+<ul class="nav nav-tabs">
+    <li <?php if(!$this->archived) {echo 'class="active";';} ?>><a href="/">Active projects</a></li>
+    <li <?php if($this->archived) {echo 'class="active";';} ?>><a href="http://<?php echo $_SERVER['HTTP_HOST'].'?archived=1'; ?>">Archived projects</a></li>
+</ul>
+<div class="row-fluid">
+    <div class="span12">
+        <button onclick="editProject('');" class="btn btn-success pull-right"><i class="icon-white icon-pencil"></i> New Project</button>
+<?php
+        $map = array(
+            array('label' => 'Project', 'column' => function($values){
+                return '<a href="/index/project/id/'.$values['id'].'">'.$values['name'].'</a>';
+            }),
+            array('label' => '<i class="icon-cog"></i>', 'column' => function($values){
+                $html = '<button onclick="editProject(\''.$values['id'].'\');" class="btn btn-info"><i class="icon-white icon-pencil"></i> Edit</button>';
+                if($values['archived']) {
+                    $html .= '<a class="btn btn-success" href="/index/archive-project/id/'.$values['id'].'/archive/0"><i class="icon-white icon-upload-alt"></i> Unarchive</a> ';
+                } else {
+                    $html .= '<a class="btn btn-warning" href="/index/archive-project/id/'.$values['id'].'/archive/1"><i class="icon-white icon-download-alt"></i> Archive</a>';
+                }
+                return $html;
+            }, 'class' => 'project-options')
+        );
+        $this->listerine()
+            ->setMap($map)
+            ->setClass('table table-bordered table-striped table-hover')
+            ->setHeaderData(array('title' => 'Projects'))
+            ->setId('projects')
+            ->setAutoUpdate(false)
+            ->setFormId('Forms_Projects_Search')
+            ->setDisplayTotalResults(true)
+            ->setItemsPerPage(15);
+        echo $this->listerine()->render($this->projects);
+?>
+    </div>
+</div>
+<div id="projectModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="projectModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="projectModalLabel">Project</h3>
+  </div>
+  <div class="modal-body">
+  </div>
+  <div class="modal-footer"></div>
+</div>
+<script type="text/javascript">
+    function editProject(projectId) {
+        $.ajax({
+            url: '/index/edit-project/id/'+projectId,
+            success: function(data) {
+                $('#projectModal div.modal-body').html(data);
+                $('#projectModal').modal('show');
+            }
+        })
+    }
+</script>

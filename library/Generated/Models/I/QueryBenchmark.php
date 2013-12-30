@@ -1,12 +1,12 @@
 <?php
 
 /**
- * Database
+ * QueryBenchmark
  *
- * Generated class file for table inquery.database
+ * Generated class file for table inquery.query_benchmark
  * Any changes here will be overridden.
  */
-abstract class Generated_Models_I_Database extends DDM_Db_Table
+abstract class Generated_Models_I_QueryBenchmark extends DDM_Db_Table
 {
 
     /**
@@ -15,7 +15,7 @@ abstract class Generated_Models_I_Database extends DDM_Db_Table
     protected $_metadata = array(
         'id' => array(
             'SCHEMA_NAME' => null,
-            'TABLE_NAME' => 'database',
+            'TABLE_NAME' => 'query_benchmark',
             'COLUMN_NAME' => 'id',
             'COLUMN_POSITION' => 1,
             'DATA_TYPE' => 'int',
@@ -29,31 +29,31 @@ abstract class Generated_Models_I_Database extends DDM_Db_Table
             'PRIMARY_POSITION' => 1,
             'IDENTITY' => true
             ),
-        'name' => array(
+        'query_id' => array(
             'SCHEMA_NAME' => null,
-            'TABLE_NAME' => 'database',
-            'COLUMN_NAME' => 'name',
+            'TABLE_NAME' => 'query_benchmark',
+            'COLUMN_NAME' => 'query_id',
             'COLUMN_POSITION' => 2,
-            'DATA_TYPE' => 'varchar',
+            'DATA_TYPE' => 'int',
             'DEFAULT' => null,
             'NULLABLE' => false,
-            'LENGTH' => '255',
+            'LENGTH' => null,
             'SCALE' => null,
             'PRECISION' => null,
-            'UNSIGNED' => null,
+            'UNSIGNED' => true,
             'PRIMARY' => false,
             'PRIMARY_POSITION' => null,
             'IDENTITY' => false
             ),
-        'db_name' => array(
+        'hash' => array(
             'SCHEMA_NAME' => null,
-            'TABLE_NAME' => 'database',
-            'COLUMN_NAME' => 'db_name',
+            'TABLE_NAME' => 'query_benchmark',
+            'COLUMN_NAME' => 'hash',
             'COLUMN_POSITION' => 3,
             'DATA_TYPE' => 'varchar',
             'DEFAULT' => null,
             'NULLABLE' => false,
-            'LENGTH' => '40',
+            'LENGTH' => '32',
             'SCALE' => null,
             'PRECISION' => null,
             'UNSIGNED' => null,
@@ -61,65 +61,17 @@ abstract class Generated_Models_I_Database extends DDM_Db_Table
             'PRIMARY_POSITION' => null,
             'IDENTITY' => false
             ),
-        'db_user' => array(
+        'time' => array(
             'SCHEMA_NAME' => null,
-            'TABLE_NAME' => 'database',
-            'COLUMN_NAME' => 'db_user',
+            'TABLE_NAME' => 'query_benchmark',
+            'COLUMN_NAME' => 'time',
             'COLUMN_POSITION' => 4,
-            'DATA_TYPE' => 'varchar',
+            'DATA_TYPE' => 'decimal',
             'DEFAULT' => null,
             'NULLABLE' => false,
-            'LENGTH' => '40',
-            'SCALE' => null,
-            'PRECISION' => null,
-            'UNSIGNED' => null,
-            'PRIMARY' => false,
-            'PRIMARY_POSITION' => null,
-            'IDENTITY' => false
-            ),
-        'db_pass' => array(
-            'SCHEMA_NAME' => null,
-            'TABLE_NAME' => 'database',
-            'COLUMN_NAME' => 'db_pass',
-            'COLUMN_POSITION' => 5,
-            'DATA_TYPE' => 'varchar',
-            'DEFAULT' => null,
-            'NULLABLE' => false,
-            'LENGTH' => '60',
-            'SCALE' => null,
-            'PRECISION' => null,
-            'UNSIGNED' => null,
-            'PRIMARY' => false,
-            'PRIMARY_POSITION' => null,
-            'IDENTITY' => false
-            ),
-        'db_host' => array(
-            'SCHEMA_NAME' => null,
-            'TABLE_NAME' => 'database',
-            'COLUMN_NAME' => 'db_host',
-            'COLUMN_POSITION' => 6,
-            'DATA_TYPE' => 'varchar',
-            'DEFAULT' => null,
-            'NULLABLE' => false,
-            'LENGTH' => '100',
-            'SCALE' => null,
-            'PRECISION' => null,
-            'UNSIGNED' => null,
-            'PRIMARY' => false,
-            'PRIMARY_POSITION' => null,
-            'IDENTITY' => false
-            ),
-        'db_port' => array(
-            'SCHEMA_NAME' => null,
-            'TABLE_NAME' => 'database',
-            'COLUMN_NAME' => 'db_port',
-            'COLUMN_POSITION' => 7,
-            'DATA_TYPE' => 'varchar',
-            'DEFAULT' => '3306',
-            'NULLABLE' => false,
-            'LENGTH' => '6',
-            'SCALE' => null,
-            'PRECISION' => null,
+            'LENGTH' => null,
+            'SCALE' => '5',
+            'PRECISION' => '10',
             'UNSIGNED' => null,
             'PRIMARY' => false,
             'PRIMARY_POSITION' => null,
@@ -130,7 +82,7 @@ abstract class Generated_Models_I_Database extends DDM_Db_Table
     /**
      * Table name
      */
-    protected $_name = 'database';
+    protected $_name = 'query_benchmark';
 
     /**
      * Does this table have Auto Increment?
@@ -142,12 +94,9 @@ abstract class Generated_Models_I_Database extends DDM_Db_Table
      */
     protected $_cols = array(
         'id',
-        'name',
-        'db_name',
-        'db_user',
-        'db_pass',
-        'db_host',
-        'db_port'
+        'query_id',
+        'hash',
+        'time'
         );
 
     /**
@@ -186,9 +135,22 @@ abstract class Generated_Models_I_Database extends DDM_Db_Table
     public function loadById($id)
     {
         $select = parent::getSelect();
-        $select->from('database');
+        $select->from('query_benchmark');
         $select->where('id = ?');
         return $this->_db->fetchAll($select, array($id));
+    }
+
+    /**
+     * Load by queryId
+     *
+     * @return array
+     */
+    public function loadByQueryId($queryId)
+    {
+        $select = parent::getSelect();
+        $select->from('query_benchmark');
+        $select->where('query_id = ?');
+        return $this->_db->fetchAll($select, array($queryId));
     }
 
     /**
@@ -228,7 +190,7 @@ abstract class Generated_Models_I_Database extends DDM_Db_Table
                 } else {
                     $id = $data[$i];
                 }
-                $o = new Models_I_Database();
+                $o = new Models_I_QueryBenchmark();
                 $o->loadOne($id);
                 $objs[$id] = $o;
             }
@@ -258,7 +220,7 @@ abstract class Generated_Models_I_Database extends DDM_Db_Table
      * Set the Id property
      *
      * @param int $Id
-     * @return Database
+     * @return QueryBenchmark
      */
     public function setId($id)
     {
@@ -279,144 +241,72 @@ abstract class Generated_Models_I_Database extends DDM_Db_Table
     }
 
     /**
-     * Set the Name property
+     * Set the QueryId property
      *
-     * @param string $Name
-     * @return Database
+     * @param int $QueryId
+     * @return QueryBenchmark
      */
-    public function setName($name)
+    public function setQueryId($queryId)
     {
-        $this->_ddm_data['name'] = (string) $name;
+        $this->_ddm_data['query_id'] = (int) $queryId;
         return $this;
     }
 
     /**
-     * Get name
+     * Get queryId
      */
-    public function getName()
+    public function getQueryId()
     {
-        if( isset($this->_ddm_data['name']) ) {
-            return $this->_ddm_data['name'];
+        if( isset($this->_ddm_data['query_id']) ) {
+            return $this->_ddm_data['query_id'];
         } else {
             return null;
         }
     }
 
     /**
-     * Set the DbName property
+     * Set the Hash property
      *
-     * @param string $DbName
-     * @return Database
+     * @param string $Hash
+     * @return QueryBenchmark
      */
-    public function setDbName($dbName)
+    public function setHash($hash)
     {
-        $this->_ddm_data['db_name'] = (string) $dbName;
+        $this->_ddm_data['hash'] = (string) $hash;
         return $this;
     }
 
     /**
-     * Get dbName
+     * Get hash
      */
-    public function getDbName()
+    public function getHash()
     {
-        if( isset($this->_ddm_data['db_name']) ) {
-            return $this->_ddm_data['db_name'];
+        if( isset($this->_ddm_data['hash']) ) {
+            return $this->_ddm_data['hash'];
         } else {
             return null;
         }
     }
 
     /**
-     * Set the DbUser property
+     * Set the Time property
      *
-     * @param string $DbUser
-     * @return Database
+     * @param float $Time
+     * @return QueryBenchmark
      */
-    public function setDbUser($dbUser)
+    public function setTime($time)
     {
-        $this->_ddm_data['db_user'] = (string) $dbUser;
+        $this->_ddm_data['time'] = (float) $time;
         return $this;
     }
 
     /**
-     * Get dbUser
+     * Get time
      */
-    public function getDbUser()
+    public function getTime()
     {
-        if( isset($this->_ddm_data['db_user']) ) {
-            return $this->_ddm_data['db_user'];
-        } else {
-            return null;
-        }
-    }
-
-    /**
-     * Set the DbPass property
-     *
-     * @param string $DbPass
-     * @return Database
-     */
-    public function setDbPass($dbPass)
-    {
-        $this->_ddm_data['db_pass'] = (string) $dbPass;
-        return $this;
-    }
-
-    /**
-     * Get dbPass
-     */
-    public function getDbPass()
-    {
-        if( isset($this->_ddm_data['db_pass']) ) {
-            return $this->_ddm_data['db_pass'];
-        } else {
-            return null;
-        }
-    }
-
-    /**
-     * Set the DbHost property
-     *
-     * @param string $DbHost
-     * @return Database
-     */
-    public function setDbHost($dbHost)
-    {
-        $this->_ddm_data['db_host'] = (string) $dbHost;
-        return $this;
-    }
-
-    /**
-     * Get dbHost
-     */
-    public function getDbHost()
-    {
-        if( isset($this->_ddm_data['db_host']) ) {
-            return $this->_ddm_data['db_host'];
-        } else {
-            return null;
-        }
-    }
-
-    /**
-     * Set the DbPort property
-     *
-     * @param string $DbPort
-     * @return Database
-     */
-    public function setDbPort($dbPort)
-    {
-        $this->_ddm_data['db_port'] = (string) $dbPort;
-        return $this;
-    }
-
-    /**
-     * Get dbPort
-     */
-    public function getDbPort()
-    {
-        if( isset($this->_ddm_data['db_port']) ) {
-            return $this->_ddm_data['db_port'];
+        if( isset($this->_ddm_data['time']) ) {
+            return $this->_ddm_data['time'];
         } else {
             return null;
         }

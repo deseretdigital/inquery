@@ -109,6 +109,22 @@ abstract class Generated_Models_I_Query extends DDM_Db_Table
             'PRIMARY' => false,
             'PRIMARY_POSITION' => null,
             'IDENTITY' => false
+            ),
+        'results_hash' => array(
+            'SCHEMA_NAME' => null,
+            'TABLE_NAME' => 'query',
+            'COLUMN_NAME' => 'results_hash',
+            'COLUMN_POSITION' => 7,
+            'DATA_TYPE' => 'varchar',
+            'DEFAULT' => null,
+            'NULLABLE' => true,
+            'LENGTH' => '32',
+            'SCALE' => null,
+            'PRECISION' => null,
+            'UNSIGNED' => null,
+            'PRIMARY' => false,
+            'PRIMARY_POSITION' => null,
+            'IDENTITY' => false
             )
         );
 
@@ -131,7 +147,8 @@ abstract class Generated_Models_I_Query extends DDM_Db_Table
         'is_original',
         'title',
         'query',
-        'notes'
+        'notes',
+        'results_hash'
         );
 
     /**
@@ -413,6 +430,34 @@ abstract class Generated_Models_I_Query extends DDM_Db_Table
     {
         if( isset($this->_ddm_data['notes']) ) {
             return $this->_ddm_data['notes'];
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Set the ResultsHash property
+     *
+     * @param string $ResultsHash
+     * @return Query
+     */
+    public function setResultsHash($resultsHash)
+    {
+        $value = null;
+        if( $resultsHash !== null ) {
+            $value = (string) $resultsHash;
+        }
+        $this->_ddm_data['results_hash'] =  $value;
+        return $this;
+    }
+
+    /**
+     * Get resultsHash
+     */
+    public function getResultsHash()
+    {
+        if( isset($this->_ddm_data['results_hash']) ) {
+            return $this->_ddm_data['results_hash'];
         } else {
             return null;
         }

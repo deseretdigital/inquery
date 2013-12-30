@@ -1,0 +1,22 @@
+<?php
+echo $this->form;
+?>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#Forms_I_Project').submit(function(){
+            $.ajax({
+                url:$('#Forms_I_Project').attr('action'),
+                type:$('#Forms_I_Project').attr('method'),
+                data:$('#Forms_I_Project').serialize(),
+                success: function(data) {
+                    if(!isNaN(data)) {
+                        location.href = location.href;
+                    } else {
+                        alert('Error saving');
+                    }
+                }
+            });
+            return false;
+        });
+    });
+</script>

@@ -61,6 +61,22 @@ abstract class Generated_Models_I_Project extends DDM_Db_Table
             'PRIMARY' => false,
             'PRIMARY_POSITION' => null,
             'IDENTITY' => false
+            ),
+        'archived' => array(
+            'SCHEMA_NAME' => null,
+            'TABLE_NAME' => 'project',
+            'COLUMN_NAME' => 'archived',
+            'COLUMN_POSITION' => 4,
+            'DATA_TYPE' => 'tinyint',
+            'DEFAULT' => '0',
+            'NULLABLE' => false,
+            'LENGTH' => null,
+            'SCALE' => null,
+            'PRECISION' => null,
+            'UNSIGNED' => true,
+            'PRIMARY' => false,
+            'PRIMARY_POSITION' => null,
+            'IDENTITY' => false
             )
         );
 
@@ -80,7 +96,8 @@ abstract class Generated_Models_I_Project extends DDM_Db_Table
     protected $_cols = array(
         'id',
         'database_id',
-        'name'
+        'name',
+        'archived'
         );
 
     /**
@@ -283,6 +300,33 @@ abstract class Generated_Models_I_Project extends DDM_Db_Table
     {
         if( isset($this->_ddm_data['name']) ) {
             return $this->_ddm_data['name'];
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Set the Archived property (BOOLEAN)
+     *
+     * @param int $Archived
+     * @return Project
+     */
+    public function setArchived($archived)
+    {
+        if( $archived === true || $archived == 1 || $archived === 'true' || $archived === 'TRUE' ) {
+            $this->_ddm_data['archived'] = 1;
+        } else {
+            $this->_ddm_data['archived'] = 0;
+        }
+    }
+
+    /**
+     * Get archived
+     */
+    public function getArchived()
+    {
+        if( isset($this->_ddm_data['archived']) ) {
+            return (boolean) $this->_ddm_data['archived'];
         } else {
             return null;
         }

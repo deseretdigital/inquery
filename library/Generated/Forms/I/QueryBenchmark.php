@@ -1,36 +1,18 @@
 <?php
 
 /**
- * Project
+ * QueryBenchmark
  *
- * Generated class file for table inquery.project
+ * Generated class file for table inquery.query_benchmark
  * Any changes here will be overridden.
  */
-abstract class Generated_Forms_I_Project extends DDM_BootstrapForm
+abstract class Generated_Forms_I_QueryBenchmark extends DDM_BootstrapForm
 {
 
     /**
      * Field prefix
      */
     protected $fieldPrefix = 'I';
-
-    /**
-     * Populate the I_database_idfield
-     */
-    public function populateDatabaseId($keyField = 'id', $valueField = 'name')
-    {
-        $obj = new Models_I_Database();
-        $ele = $this->getElement('I_database_id');
-        $sql = "SELECT `$keyField`, `$valueField` FROM `". $obj->getTableName() . "` ORDER BY `$valueField`";
-        $rows = $obj->getAdapter()->fetchAll($sql);
-        if( count($rows) ) {
-            $tmp = array();
-            foreach($rows as $r) {
-                $tmp[ $r[$keyField ] ] = $r[$valueField];
-            }
-          $ele->addMultiOptions( $tmp );
-        }
-    }
 
     /**
      * The constructor
@@ -43,36 +25,36 @@ abstract class Generated_Forms_I_Project extends DDM_BootstrapForm
         );
         $this->addElement($I_id);
         
-        $I_database_id = new Zend_Form_Element_Select( 'I_database_id',
+        $I_query_id = new Zend_Form_Element_Select( 'I_query_id',
             array(
                 'filters' => array('StringTrim'),
-                'label' => 'Database'
+                'label' => 'Query'
                 )
         );
-        $I_database_id->setAttrib('maxlength', '20');
+        $I_query_id->setAttrib('maxlength', '20');
         
-        $this->addElement($I_database_id);
+        $this->addElement($I_query_id);
         
-        $I_name = new Zend_Form_Element_Textarea( 'I_name',
+        $I_hash = new Zend_Form_Element_Text( 'I_hash',
             array(
                 'filters' => array('StringTrim'),
-                'label' => 'Name'
+                'label' => 'Hash'
                 )
         );
-        $I_name->setAttrib('maxlength', '255');
+        $I_hash->setAttrib('maxlength', '32');
         
-        $I_name->addValidator('stringLength', false, array(0, 255));
-        $this->addElement($I_name);
+        $I_hash->addValidator('stringLength', false, array(0, 32));
+        $this->addElement($I_hash);
         
-        $I_archived = new Zend_Form_Element_Checkbox( 'I_archived',
+        $I_time = new Zend_Form_Element_Text( 'I_time',
             array(
                 'filters' => array('StringTrim'),
-                'label' => 'Archived'
+                'label' => 'Time'
                 )
         );
-        $I_archived->setAttrib('maxlength', '20');
+        $I_time->setAttrib('maxlength', '15');
         
-        $this->addElement($I_archived);
+        $this->addElement($I_time);
         
         $this->addElement( 
             'submit',
@@ -85,18 +67,18 @@ abstract class Generated_Forms_I_Project extends DDM_BootstrapForm
     public function postProcess()
     {
         $redirector = Zend_Controller_Action_HelperBroker::getStaticHelper('redirector');
-        $redirector->setGotoUrl('/project/list');
+        $redirector->setGotoUrl('/querybenchmark/list');
     }
 
     /**
      * Get the corresponding model
      *
-     * @return Models_I_Project
+     * @return Models_I_QueryBenchmark
      */
     protected function getModel()
     {
         // get a model
-        $model = new Models_I_Project();
+        $model = new Models_I_QueryBenchmark();
         return $model;
     }
 
