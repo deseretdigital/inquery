@@ -1,0 +1,44 @@
+<style>
+    .project-options {
+        width:180px;
+    }
+</style>
+<h2><?php echo $this->project['name']; ?></h2>
+
+<div class="row-fluid">
+    <div class="span12">
+<?php
+        $map = array(
+            array('label' => 'Project', 'column' => function($values){
+                return '<a href="/index/project/id/'.$values['id'].'">'.$values['title'].'</a><BR>' . $values['query'];
+            }),
+            array('label' => 'Time', 'column' => function($values){
+            	return $values['time'];
+            }),
+            array('label' => '<i class="icon-cog"></i>', 'column' => function($values){
+				$html = '<a class="btn btn-danger" href="/index/delete-query/id/'.$values['id'].'/delete/1"><i class="icon-white icon-trash"></i> Delete</a>';
+                return $html;
+            }, 'class' => 'project-options')
+        );
+        $this->listerine()
+            ->setMap($map)
+            ->setClass('table table-bordered table-striped table-hover')
+            ->setHeaderData(array('title' => 'Queries'))
+            ->setId('queries')
+            ->setAutoUpdate(false)
+            ->setFormId('Forms_Projects_Search')
+            ->setDisplayTotalResults(true)
+            ->setItemsPerPage(15);
+        echo $this->listerine()->render($this->queries);
+?>
+    </div>
+</div>
+<div id="projectModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="projectModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="projectModalLabel">Project</h3>
+  </div>
+  <div class="modal-body">
+  </div>
+  <div class="modal-footer"></div>
+</div>
