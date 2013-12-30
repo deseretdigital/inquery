@@ -1,36 +1,18 @@
 <?php
 
 /**
- * Database
+ * Site
  *
- * Generated class file for table inquery.database
+ * Generated class file for table inquery.site
  * Any changes here will be overridden.
  */
-abstract class Generated_Forms_I_Database extends DDM_BootstrapForm
+abstract class Generated_Forms_I_Site extends DDM_BootstrapForm
 {
 
     /**
      * Field prefix
      */
     protected $fieldPrefix = 'I';
-
-    /**
-     * Populate the I_site_idfield
-     */
-    public function populateSiteId($keyField = 'id', $valueField = 'name')
-    {
-        $obj = new Models_I_Site();
-        $ele = $this->getElement('I_site_id');
-        $sql = "SELECT `$keyField`, `$valueField` FROM `". $obj->getTableName() . "` ORDER BY `$valueField`";
-        $rows = $obj->getAdapter()->fetchAll($sql);
-        if( count($rows) ) {
-            $tmp = array();
-            foreach($rows as $r) {
-                $tmp[ $r[$keyField ] ] = $r[$valueField];
-            }
-          $ele->addMultiOptions( $tmp );
-        }
-    }
 
     /**
      * The constructor
@@ -43,81 +25,16 @@ abstract class Generated_Forms_I_Database extends DDM_BootstrapForm
         );
         $this->addElement($I_id);
         
-        $I_name = new Zend_Form_Element_Textarea( 'I_name',
+        $I_name = new Zend_Form_Element_Text( 'I_name',
             array(
                 'filters' => array('StringTrim'),
                 'label' => 'Name'
                 )
         );
-        $I_name->setAttrib('maxlength', '255');
+        $I_name->setAttrib('maxlength', '40');
         
-        $I_name->addValidator('stringLength', false, array(0, 255));
+        $I_name->addValidator('stringLength', false, array(0, 40));
         $this->addElement($I_name);
-        
-        $I_db_name = new Zend_Form_Element_Text( 'I_db_name',
-            array(
-                'filters' => array('StringTrim'),
-                'label' => 'Db name'
-                )
-        );
-        $I_db_name->setAttrib('maxlength', '40');
-        
-        $I_db_name->addValidator('stringLength', false, array(0, 40));
-        $this->addElement($I_db_name);
-        
-        $I_db_user = new Zend_Form_Element_Text( 'I_db_user',
-            array(
-                'filters' => array('StringTrim'),
-                'label' => 'Db user'
-                )
-        );
-        $I_db_user->setAttrib('maxlength', '40');
-        
-        $I_db_user->addValidator('stringLength', false, array(0, 40));
-        $this->addElement($I_db_user);
-        
-        $I_db_pass = new Zend_Form_Element_Textarea( 'I_db_pass',
-            array(
-                'filters' => array('StringTrim'),
-                'label' => 'Db pass'
-                )
-        );
-        $I_db_pass->setAttrib('maxlength', '255');
-        
-        $I_db_pass->addValidator('stringLength', false, array(0, 255));
-        $this->addElement($I_db_pass);
-        
-        $I_db_host = new Zend_Form_Element_Textarea( 'I_db_host',
-            array(
-                'filters' => array('StringTrim'),
-                'label' => 'Db host'
-                )
-        );
-        $I_db_host->setAttrib('maxlength', '255');
-        
-        $I_db_host->addValidator('stringLength', false, array(0, 255));
-        $this->addElement($I_db_host);
-        
-        $I_db_port = new Zend_Form_Element_Text( 'I_db_port',
-            array(
-                'filters' => array('StringTrim'),
-                'label' => 'Db port'
-                )
-        );
-        $I_db_port->setAttrib('maxlength', '6');
-        
-        $I_db_port->addValidator('stringLength', false, array(0, 6));
-        $this->addElement($I_db_port);
-        
-        $I_site_id = new Zend_Form_Element_Select( 'I_site_id',
-            array(
-                'filters' => array('StringTrim'),
-                'label' => 'Site'
-                )
-        );
-        $I_site_id->setAttrib('maxlength', '20');
-        
-        $this->addElement($I_site_id);
         
         $this->addElement( 
             'submit',
@@ -130,18 +47,18 @@ abstract class Generated_Forms_I_Database extends DDM_BootstrapForm
     public function postProcess()
     {
         $redirector = Zend_Controller_Action_HelperBroker::getStaticHelper('redirector');
-        $redirector->setGotoUrl('/database/list');
+        $redirector->setGotoUrl('/site/list');
     }
 
     /**
      * Get the corresponding model
      *
-     * @return Models_I_Database
+     * @return Models_I_Site
      */
     protected function getModel()
     {
         // get a model
-        $model = new Models_I_Database();
+        $model = new Models_I_Site();
         return $model;
     }
 

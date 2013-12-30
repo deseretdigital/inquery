@@ -32,7 +32,8 @@ class Models_I_Query extends Generated_Models_I_Query
      */
     public function update(array $data = null, $fooVar = null)
     {
-        return parent::save( $data );
+        $ret = parent::save( $data );
+        return $ret;
     }
 
     /**
@@ -63,7 +64,7 @@ class Models_I_Query extends Generated_Models_I_Query
     			)
     	);
 
-    	$runCount = 2;
+    	$runCount = 3;
     	$times = array();
     	$totalTime = 0.0;
 
