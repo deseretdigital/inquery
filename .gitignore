@@ -8,3 +8,5 @@ library/ZendX
 .project
 .buildpath
 *~
+public/js/lib
+public/css/lib
