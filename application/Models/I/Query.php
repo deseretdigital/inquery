@@ -72,22 +72,26 @@ class Models_I_Query extends Generated_Models_I_Query
     			)
     	);
 
-    	$runCount = 3;
+    	$runs = 3;
     	$times = array();
     	$totalTime = 0.0;
+    	$maxTime = 5;
 
     	$adapter = new Zend_Db_Adapter_Mysqli($config);
 
-    	while($runCount-- > 0) {
+    	while($runs-- > 0) {
     		$startTime = microtime(true);
     		$results = $adapter->fetchAll($query);
     		$endTime = microtime(true);
     		$time = $endTime - $startTime;
-    		$totalTime -= $time;
+    		$totalTime += (float) $time;
     		$times[] = $time;
+    		// if it is a slow query, don't run it again
+    		if($time > $maxTime) {
+    			break;
+    		}
     	}
-
-    	$avgTime = round($totalTime / $runCount, 6);
+    	$avgTime = round($totalTime / count($times), 6);
 
     	// hash the full results and column names for result comparison
     	$hash = md5(serialize($results));
