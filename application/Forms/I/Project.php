@@ -10,7 +10,7 @@ class Forms_I_Project extends Generated_Forms_I_Project {
 
     public function process($request) {
         $processed = parent::process($request);
-        if(!$request->getParam('I_id')) {
+        if($request->isPost() && !$request->getParam('I_id')) {
             $Query = new Models_I_Query();
             $Query->setProjectId($processed);
             $Query->setTitle($request->getParam('I_title'));
