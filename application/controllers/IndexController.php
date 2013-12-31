@@ -71,7 +71,14 @@ class IndexController extends DDM_Controller_Action
             $return['error'] = true;
             $return['error_message'] = $e->getMessage();
         }
-        unset($response['results']);
+        $response['results'] = array_slice($response['results'], 0, 5);
+        $this->view->listerine()
+            ->setClass('table table-bordered')
+            ->setHeaderData(array('title' => 'Results'))
+            ->setId('results-'.uniqid())
+            ->setAutoUpdate(false)
+            ->setItemsPerPage(5);
+        $response['results_html'] = $this->view->listerine()->render($response['results']);
         $return = array_merge($return, $response);
         echo json_encode($return);
     }

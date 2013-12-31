@@ -2,6 +2,11 @@
     .project-options {
         width:180px;
     }
+    .query-rows {
+        max-width: 600px;
+        max-height: 300px;
+        overflow: auto;
+    }
 </style>
 <h2><?php echo $this->project['name']; ?></h2>
 
@@ -129,7 +134,13 @@
                                     <tr><th>Time</th><td>'+response.avgTime+'</td></tr>\n\
                                     <tr><th>Results Hash</th><td>'+((response.resultsHash == response.originalResultsHash)?'<i class="icon-ok"></i>':'<span class="badge badge-important"><i class="icon-warning-sign icon-white"></i></span>')+'</td></tr>\n\
                                     <tr><th>Structure Hash</th><td>'+((response.structureHash == response.originalStructureHash)?'<i class="icon-ok"></i>':'<span class="badge badge-important"><i class="icon-warning-sign icon-white"></i></span>')+'</td></tr>\n\
-                                </table>';
+                                </table>\n\
+                                <br />\n\
+                                <div class="row-fluid">\n\
+                                    <div class="span12">\n\
+                                        <div class="query-rows">'+response.results_html+'</div>\n\
+                                    </div>\n\
+                                </div>';
                 } else {
                     var html = '<div class="alert alert-error">'+response.error_message+'</div>';
                 }
