@@ -10,13 +10,52 @@
 <?php
         $map = array(
             array('label' => 'Project', 'column' => function($values){
-                return '<a href="/index/project/id/'.$values['id'].'">'.$values['title'].'</a><BR>' . $values['query'];
+                $form = new Forms_I_Query();
+                $load = array();
+                array_walk($values, function($value, $key) use(&$load){
+                    $load['I_'.$key] = $value;
+                });
+                $form->populate($load);
+                $form->setAttrib('id', 'Forms_I_Query-'.$values['id']);
+                $form->setAttrib('class', 'query-form');
+                return '<div class="accordion" id="query-'.$values['id'].'">
+                            <div class="accordion-group">
+                                <div class="accordion-heading">
+                                    <div class="row-fluid">
+                                        <div class="span3">
+                                            <a class="accordion-toggle" data-toggle="collapse" data-parent="query-'.$values['id'].'" href="#collapse-'.$values['id'].'">'.$values['title'].'</a>
+                                        </div>
+                                        <div class="span9">
+                                            <p>'.$values['notes'].'</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="collapse-'.$values['id'].'" class="accordion-body collapse">
+                                    <div class="accordion-inner">
+                                        '. $form .'
+                                        <div class="query-results">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>';
+            }),
+            array('label' => 'Original', 'column' => function($values){
+                return ($values['is_original']) ? '<center><i class="icon-ok"></i></center>' : '';
+            }),
+            array('label' => 'Column Match', 'column' => function($values){
+                return (($values['is_original']) ? 'N/A' : (($values['column_hash'] == $this->original['column_hash'])?'<center><i class="icon-ok"></i></center>':'<center><span class="badge badge-important"><i class="icon-warning-sign icon-white"></i></span></center>'));
+            }),
+            array('label' => 'Results Match', 'column' => function($values){
+                return (($values['is_original']) ? 'N/A' : (($values['results_hash'] == $this->original['results_hash'])?'<center><i class="icon-ok"></i></center>':'<center><span class="badge badge-important"><i class="icon-warning-sign icon-white"></i></span></center>'));
             }),
             array('label' => 'Time', 'column' => function($values){
             	return $values['time'];
             }),
             array('label' => '<i class="icon-cog"></i>', 'column' => function($values){
-				$html = '<a class="btn btn-danger" href="/index/delete-query/id/'.$values['id'].'/delete/1"><i class="icon-white icon-trash"></i> Delete</a>';
+				$html = '<a class="btn btn-warning" href="/index/fork-query/id/'.$values['id'].'"><i class="icon-white icon-plus"></i> Fork</a>
+                                         <a onclick="if(!confirm(\'Are you sure you want to delete the query?\n\nThis cannot be undone.\')) { return false; }" class="btn btn-danger" href="/index/delete-query/id/'.$values['id'].'/delete/1"><i class="icon-white icon-trash"></i> Delete</a>';
                 return $html;
             }, 'class' => 'project-options')
         );
@@ -42,3 +81,58 @@
   </div>
   <div class="modal-footer"></div>
 </div>
+<script type="text/javascript">
+    var mime = 'text/x-mariadb';
+    // get mime type
+    if (window.location.href.indexOf('mime=') > -1) {
+      mime = window.location.href.substr(window.location.href.indexOf('mime=') + 5);
+    }
+    $(document).ready(function(){
+        $('.code-mirror').each(function(){
+            CodeMirror.fromTextArea($(this)[0], {
+                mode: mime,
+                indentWithTabs: true,
+                smartIndent: true,
+                lineNumbers: true,
+                matchBrackets : true,
+                lineWrapping: true
+            });
+        });
+        $('.run-query').each(function(){
+            $(this).click(function(){
+                submitQuery(this, $(this).closest('form'), 0);
+                return false;
+            });
+        });
+        $('.save-query').each(function(){
+            $(this).click(function(){
+                submitQuery(this, $(this).closest('form'), 1);
+                return false;
+            });
+        });
+    });
+    function submitQuery(button, form, save) {
+        form.find('textarea[name="I_query"]').val(form.find('.CodeMirror-code pre').text());
+        button.disabled = true;
+        var text = $(button).text();
+        $(button).text('Loading...');
+        $.ajax({
+            url: '/index/run-query',
+            type: 'POST',
+            data: form.serialize()+'&save='+save,
+            dataType: 'JSON',
+            success: function(response) {
+                var html = '<table class="table table-bordered">\n\
+                                <tr><th>Time</th><td>'+response.avgTime+'</td></tr>\n\
+                                <tr><th>Results Hash</th><td>'+((response.resultsHash == response.originalResultsHash)?'<i class="icon-ok"></i>':'<span class="badge badge-important"><i class="icon-warning-sign icon-white"></i></span>')+'</td></tr>\n\
+                                <tr><th>Structure Hash</th><td>'+((response.structureHash == response.originalStructureHash)?'<i class="icon-ok"></i>':'<span class="badge badge-important"><i class="icon-warning-sign icon-white"></i></span>')+'</td></tr>\n\
+                            </table>';
+                form.siblings('div.query-results').html(html);
+            },
+            complete: function(response){
+                button.disabled = false;
+                $(button).text(text);
+            }
+        })
+    }
+</script>

@@ -91,11 +91,14 @@ class Models_I_Query extends Generated_Models_I_Query
     		$this->save();
     	}
 
+        $originalQuery = $project->getOriginalQuery();
     	$results = array(
 			'avgTime' => $avgTime,
 			'results' => $results,
 			'structureHash' => $structureHash,
-			'resultsHash' => $hash
+			'resultsHash' => $hash,
+                        'originalStructureHash' => $originalQuery->getColumnHash(),
+                        'originalResultsHash' => $originalQuery->getResultsHash()
 		);
 
     	return $results;
@@ -103,6 +106,36 @@ class Models_I_Query extends Generated_Models_I_Query
     }
 
 
+    /**
+     * Load by projectId
+     *
+     * @return array
+     */
+    public function loadByProjectId($projectId)
+    {
+        $select = parent::getSelect();
+        $select->from('query');
+        $select->where('project_id = ?');
+        $select->order('id');
+        return $this->_db->fetchAll($select, array($projectId));
+    }
 
+    public function fork() {
+        if(!$this->getId()) {
+            return false;
+        }
+
+        $Query = new Models_I_Query();
+        $all = $this->getAll();
+        unset($all['id']);
+        unset($all['is_original']);
+        $all['title'] = 'Forked from - '.$all['title'];
+        $all['notes'] = 'Forked from - '.$all['notes'];
+        unset($all['results_hash']);
+        unset($all['column_hash']);
+        unset($all['time']);
+        $Query->setAll($all);
+        return $Query->save();
+    }
 
 }

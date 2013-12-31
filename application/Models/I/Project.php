@@ -35,5 +35,30 @@ class Models_I_Project extends Generated_Models_I_Project
         return parent::save( $data );
     }
 
+    /**
+     *
+     * @param int $projectId
+     * @param boolean $returnObject
+     * @return Models_I_Query|boolean
+     */
+    public function getOriginalQuery($projectId = null, $returnObject = true) {
 
+        if(empty($projectId)) {
+            $projectId = $this->getId();
+        }
+        if(empty($projectId)) {
+            return false;
+        }
+        $select = $this->getSelect()
+                ->from('query')
+                ->where('project_id = ?', $projectId)
+                ->where('is_original = 1');
+        $row = $this->_db->fetchRow($select);
+        if(!$returnObject) {
+            return $row;
+        }
+        $Query = new Models_I_Query();
+        $Query->loadOne($row['id']);
+        return $Query;
+    }
 }
