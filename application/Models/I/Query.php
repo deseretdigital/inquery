@@ -36,6 +36,11 @@ class Models_I_Query extends Generated_Models_I_Query
         return $ret;
     }
 
+    public function setQuery($query) {
+        $query = strip_tags($this->getSelect()->beautifySQL($query));
+        parent::setQuery($query);
+    }
+
     /**
      * Run a query
      * @param string $query
