@@ -33,6 +33,24 @@ abstract class Generated_Forms_I_Project extends DDM_BootstrapForm
     }
 
     /**
+     * Populate the I_site_idfield
+     */
+    public function populateSiteId($keyField = 'id', $valueField = 'name')
+    {
+        $obj = new Models_I_Site();
+        $ele = $this->getElement('I_site_id');
+        $sql = "SELECT `$keyField`, `$valueField` FROM `". $obj->getTableName() . "` ORDER BY `$valueField`";
+        $rows = $obj->getAdapter()->fetchAll($sql);
+        if( count($rows) ) {
+            $tmp = array();
+            foreach($rows as $r) {
+                $tmp[ $r[$keyField ] ] = $r[$valueField];
+            }
+          $ele->addMultiOptions( $tmp );
+        }
+    }
+
+    /**
      * The constructor
      */
     public function __construct($name = null, $formType = 'horizontal')
@@ -73,6 +91,16 @@ abstract class Generated_Forms_I_Project extends DDM_BootstrapForm
         $I_archived->setAttrib('maxlength', '20');
         
         $this->addElement($I_archived);
+        
+        $I_site_id = new Zend_Form_Element_Select( 'I_site_id',
+            array(
+                'filters' => array('StringTrim'),
+                'label' => 'Site'
+                )
+        );
+        $I_site_id->setAttrib('maxlength', '20');
+        
+        $this->addElement($I_site_id);
         
         $this->addElement( 
             'submit',

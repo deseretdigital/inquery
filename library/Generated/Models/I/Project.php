@@ -77,6 +77,23 @@ abstract class Generated_Models_I_Project extends DDM_Db_Table
             'PRIMARY' => false,
             'PRIMARY_POSITION' => null,
             'IDENTITY' => false
+            ),
+        'site_id' => array(
+            'SCHEMA_NAME' => null,
+            'TABLE_NAME' => 'project',
+            'COLUMN_NAME' => 'site_id',
+            'COLUMN_POSITION' => 5,
+            'DATA_TYPE' => 'int',
+            'DEFAULT' => null,
+            'NULLABLE' => false,
+            'LENGTH' => null,
+            'SCALE' => null,
+            'PRECISION' => null,
+            'UNSIGNED' => true,
+            'PRIMARY' => false,
+            'PRIMARY_POSITION' => null,
+            'IDENTITY' => false,
+            'REFERENCED_TABLE_NAME' => 'site'
             )
         );
 
@@ -97,7 +114,8 @@ abstract class Generated_Models_I_Project extends DDM_Db_Table
         'id',
         'database_id',
         'name',
-        'archived'
+        'archived',
+        'site_id'
         );
 
     /**
@@ -145,6 +163,22 @@ abstract class Generated_Models_I_Project extends DDM_Db_Table
     }
 
     /**
+     * Get the related Site from inquery.site
+     *
+     * @return Models_I_Site
+     */
+    public function getSite()
+    {
+        if( !$this->getSiteId() )
+        {
+            return false;
+        }
+        $obj = new Models_I_Site();
+            $obj->loadOne( $this->getSiteId() );
+            return $obj;
+    }
+
+    /**
      * Load by databaseId
      *
      * @return array
@@ -168,6 +202,19 @@ abstract class Generated_Models_I_Project extends DDM_Db_Table
         $select->from('project');
         $select->where('id = ?');
         return $this->_db->fetchAll($select, array($id));
+    }
+
+    /**
+     * Load by siteId
+     *
+     * @return array
+     */
+    public function loadBySiteId($siteId)
+    {
+        $select = parent::getSelect();
+        $select->from('project');
+        $select->where('site_id = ?');
+        return $this->_db->fetchAll($select, array($siteId));
     }
 
     /**
@@ -327,6 +374,30 @@ abstract class Generated_Models_I_Project extends DDM_Db_Table
     {
         if( isset($this->_ddm_data['archived']) ) {
             return (boolean) $this->_ddm_data['archived'];
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Set the SiteId property
+     *
+     * @param int $SiteId
+     * @return Project
+     */
+    public function setSiteId($siteId)
+    {
+        $this->_ddm_data['site_id'] = (int) $siteId;
+        return $this;
+    }
+
+    /**
+     * Get siteId
+     */
+    public function getSiteId()
+    {
+        if( isset($this->_ddm_data['site_id']) ) {
+            return $this->_ddm_data['site_id'];
         } else {
             return null;
         }

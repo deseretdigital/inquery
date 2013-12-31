@@ -86,7 +86,7 @@ class IndexController extends DDM_Controller_Action
         $Query = new Models_I_Query();
         $id = (int)$this->getRequest()->getParam('id');
         $Query->loadOne($id);
-        $Query->delete("id = $id");
+        $Query->delete("id = $id AND is_original = 0");
         $this->_redirect('/index/project/id/'.$Query->getProjectId());
     }
 

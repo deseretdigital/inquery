@@ -54,8 +54,10 @@
             	return $values['time'];
             }),
             array('label' => '<i class="icon-cog"></i>', 'column' => function($values){
-				$html = '<a class="btn btn-warning" href="/index/fork-query/id/'.$values['id'].'"><i class="icon-white icon-plus"></i> Fork</a>
-                                         <a onclick="if(!confirm(\'Are you sure you want to delete the query?\n\nThis cannot be undone.\')) { return false; }" class="btn btn-danger" href="/index/delete-query/id/'.$values['id'].'/delete/1"><i class="icon-white icon-trash"></i> Delete</a>';
+                $html = '<a class="btn btn-warning" href="/index/fork-query/id/'.$values['id'].'"><i class="icon-white icon-plus"></i> Fork</a>';
+                if(!$values['is_original']) {
+                    $html .= '<a onclick="if(!confirm(\'Are you sure you want to delete the query?\n\nThis cannot be undone.\')) { return false; }" class="btn btn-danger" href="/index/delete-query/id/'.$values['id'].'/delete/1"><i class="icon-white icon-trash"></i> Delete</a>';
+                }
                 return $html;
             }, 'class' => 'project-options')
         );
