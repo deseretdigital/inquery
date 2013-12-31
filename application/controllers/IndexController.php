@@ -69,7 +69,7 @@ class IndexController extends DDM_Controller_Action
             $response = $Query->runQuery($this->getRequest()->getParam('I_query'), $this->getRequest()->getParam('save'));
         } catch(Exception $e) {
             $return['error'] = true;
-            $return['error_Message'] = $e->getMessage();
+            $return['error_message'] = $e->getMessage();
         }
         unset($response['results']);
         $return = array_merge($return, $response);
