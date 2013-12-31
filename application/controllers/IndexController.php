@@ -55,6 +55,7 @@ class IndexController extends DDM_Controller_Action
             $Query->loadOne($this->getRequest()->getParam('I_id'));
         }
         $return = array();
+        $return['error'] = false;
         if($this->getRequest()->getParam('save')) {
             $Query->setTitle($this->getRequest()->getParam('I_title'));
             $Query->setQuery($this->getRequest()->getParam('I_query'));
@@ -63,7 +64,12 @@ class IndexController extends DDM_Controller_Action
             $Query->loadOne($id);//in case it was an insert - the dupe logic is negigible
             $return['saved'] = true;
         }
-        $response = $Query->runQuery($this->getRequest()->getParam('I_query'), $this->getRequest()->getParam('save'));
+        try {
+            $response = $Query->runQuery($this->getRequest()->getParam('I_query'), $this->getRequest()->getParam('save'));
+        } catch(Exception $e) {
+            $return['error'] = true;
+            $return['error_Message'] = $e->getMessage();
+        }
         unset($response['results']);
         $return = array_merge($return, $response);
         echo json_encode($return);

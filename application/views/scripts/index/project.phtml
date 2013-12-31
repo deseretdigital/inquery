@@ -124,16 +124,22 @@
             data: form.serialize()+'&save='+save,
             dataType: 'JSON',
             success: function(response) {
-                var html = '<table class="table table-bordered">\n\
-                                <tr><th>Time</th><td>'+response.avgTime+'</td></tr>\n\
-                                <tr><th>Results Hash</th><td>'+((response.resultsHash == response.originalResultsHash)?'<i class="icon-ok"></i>':'<span class="badge badge-important"><i class="icon-warning-sign icon-white"></i></span>')+'</td></tr>\n\
-                                <tr><th>Structure Hash</th><td>'+((response.structureHash == response.originalStructureHash)?'<i class="icon-ok"></i>':'<span class="badge badge-important"><i class="icon-warning-sign icon-white"></i></span>')+'</td></tr>\n\
-                            </table>';
+                if(!response.error) {
+                    var html = '<table class="table table-bordered">\n\
+                                    <tr><th>Time</th><td>'+response.avgTime+'</td></tr>\n\
+                                    <tr><th>Results Hash</th><td>'+((response.resultsHash == response.originalResultsHash)?'<i class="icon-ok"></i>':'<span class="badge badge-important"><i class="icon-warning-sign icon-white"></i></span>')+'</td></tr>\n\
+                                    <tr><th>Structure Hash</th><td>'+((response.structureHash == response.originalStructureHash)?'<i class="icon-ok"></i>':'<span class="badge badge-important"><i class="icon-warning-sign icon-white"></i></span>')+'</td></tr>\n\
+                                </table>';
+                } else {
+                    var html = '<div class="alert alert-error">'+response.error_message+'</div>';
+                }
                 form.siblings('div.query-results').html(html);
             },
             complete: function(response){
                 button.disabled = false;
                 $(button).text(text);
+            }, error: function(response) {
+                form.siblings('div.query-results').html(response.responseText);
             }
         })
     }
