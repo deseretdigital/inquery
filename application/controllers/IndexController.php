@@ -54,6 +54,7 @@ class IndexController extends DDM_Controller_Action
         if($this->getRequest()->getParam('I_id')) {
             $Query->loadOne($this->getRequest()->getParam('I_id'));
         }
+        $response = array();
         $return = array();
         $return['error'] = false;
         if($this->getRequest()->getParam('save')) {
