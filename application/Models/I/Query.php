@@ -52,6 +52,9 @@ class Models_I_Query extends Generated_Models_I_Query
     		throw new Exception('run() called without a query.');
     	}
 
+    	// we don't care about cached times
+    	$query = str_ireplace('SELECT ', 'SELECT SQL_NO_CACHE ', $query);
+
     	$project = $this->getProject();
     	$db = $project->getDatabase();
 
